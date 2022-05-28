@@ -11,3 +11,11 @@ class Comment(models.Model):
     comment = models.TextField(verbose_name='댓글')
     register_date = models.DateTimeField(
         auto_now_add=True, verbose_name='등록날짜')
+
+    def __str__(self):
+        return str(self.post)
+
+    class Meta:
+        db_table = 'Comment'
+        verbose_name = '댓글'
+        verbose_name_plural = '댓글'
