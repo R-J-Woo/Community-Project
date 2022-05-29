@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block contents %}
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="#!">Django Project</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">게시판</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">내 정보</a></li>
+            </ul>
+            <form class="d-flex">
+                <button class="btn" type="submit">
+                    로그인
+                </button>
+                <button class="btn" type="submit">
+                    회원가입
+                </button>
+            </form>
+        </div>
+    </div>
+</nav>
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Django Project에 오신 것을 환영합니다</h1>
+            <p class="lead fw-normal text-white-50 mb-0">이 프로젝트는 python/django로 제작한 온라인 커뮤니티입니다</p>
+        </div>
+    </div>
+</header>
+<!-- Section-->
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-12">
+            <table class="table table-light">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">작성자</th>
+                        <th scope="col">게시날짜</th>
+                    </tr>
+                </thead>
+                <tbody class="text-dark">
+                    {% for post in object_list %}
+                    <tr>
+                        <th scope="row">{{ post.id }}</th>
+                        <th>{{ post.title }}</th>
+                        <th>{{ post.user }}</th>
+                        <th>{{ post.register_date|date:'Y-m-d H:i' }}</th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
