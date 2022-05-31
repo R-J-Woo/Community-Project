@@ -35,31 +35,37 @@
     </div>
 </header>
 <!-- Section-->
-<div class="container mb-lg-5">
+<div class="container">
     <div class="row mt-5">
-        <div class="col-12">
-            <table class="table table-light">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">제목</th>
-                        <th scope="col">작성자</th>
-                        <th scope="col">게시날짜</th>
-                    </tr>
-                </thead>
-                <tbody class="text-dark">
-                    {% for post in object_list %}
-                    <tr>
-                        <th scope="row">{{ post.id }}</th>
-                        <th><a href="/board/{{ post.id }}/" style="text-decoration: none;">{{ post.title }}</a></th>
-                        <th>{{ post.user }}</th>
-                        <th>{{ post.register_date|date:'Y-m-d H:i' }}</th>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="col-12 text-center">
+            <h1>게시글 작성하기</h1>
         </div>
     </div>
+    <div class="row mt-5">
+        <div class="col-12">
+            {{ error }}
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card" style="width: 100%;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">작성자: {{ post.user }}</li>
+                    <li class="list-group-item">등록날짜: {{ post.register_date|date:'Y-m-d H:i' }}</li>
+                    <li class="list-group-item">내용: {{ post.contents }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <a href="/board/">목록보기</a>
+        </div>
+    </div>
+
 </div>
 <!-- Footer-->
 <footer class="py-5 bg-dark">

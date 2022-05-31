@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormView
 from .models import Post
 from .forms import RegisterForm
@@ -12,19 +12,7 @@ class PostList(ListView):  # post 목록을 보여주는 view
     template_name = 'board.html'
 
 
-# class PostRegister(FormView): # post 등록하는 view
-#     form_class = RegisterForm
-#     template_name = 'post_register.html'
-
-#     def get_context_data(self, **kwargs):  # get_context_date는 template에 원하는 것을 보낼 수 있다
-#         context = super().get_context_data(**kwargs)
-#         context['request'] = self.request
-#         return context
-
-#     def get_form_kwargs(self, **kwargs):
-#         kw = super().get_form_kwargs(**kwargs)
-
-def PostRegister(request):
+def PostRegister(request):  # post를 작성하여 등록하는 view
     if request.method == 'POST':
         form = RegisterForm(request.POST)
 
@@ -45,3 +33,9 @@ def PostRegister(request):
         form = RegisterForm()
 
     return render(request, 'post_register.html', {'form': form})
+
+
+class PostDetail(DetailView):  # 글 상세보기 view
+    template_name = 'post_detail.html'
+    queryset = Post.objects.all()
+    context_object_name = 'post'
