@@ -35,31 +35,40 @@
     </div>
 </header>
 <!-- Section-->
-<div class="container mb-lg-5">
+<div class="container">
     <div class="row mt-5">
-        <div class="col-12">
-            <table class="table table-light">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">제목</th>
-                        <th scope="col">작성자</th>
-                        <th scope="col">게시날짜</th>
-                    </tr>
-                </thead>
-                <tbody class="text-dark">
-                    {% for post in object_list %}
-                    <tr>
-                        <th scope="row">{{ post.id }}</th>
-                        <th>{{ post.title }}</th>
-                        <th>{{ post.user }}</th>
-                        <th>{{ post.register_date|date:'Y-m-d H:i' }}</th>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="col-12 text-center">
+            <h1>게시글 작성하기</h1>
         </div>
     </div>
+    <div class="row mt-5">
+        <div class="col-12">
+            {{ error }}
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-12">
+            <form method="POST" action="/board/register/">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {% if field.name == 'contents' %}
+                    <textarea class="form-control" name="{{ field.name }}" id="{{ field.id_for_label }}"></textarea>
+                    {% else %}
+                    <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
+                        placeholder="{{ field.label }}" name="{{ field.name }}" />
+                    {% endif %}
+                </div>
+                {% if field.errors %}
+                <span style="color: red">{{ field.errors }}</span>
+                {% endif %}
+                {% endfor %}
+                <button type="submit" class="btn btn-primary mt-4 mb-lg-5">작성</button>
+            </form>
+        </div>
+    </div>
+
 </div>
 <!-- Footer-->
 <footer class="py-5 bg-dark">
