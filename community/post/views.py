@@ -4,6 +4,8 @@ from django.views.generic.edit import FormView
 from .models import Post
 from .forms import RegisterForm
 from user.models import User
+from comment.models import Comment
+from comment.forms import RegisterForm as CommentForm
 # Create your views here.
 
 
@@ -39,3 +41,9 @@ class PostDetail(DetailView):  # 글 상세보기 view
     template_name = 'post_detail.html'
     queryset = Post.objects.all()
     context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = CommentForm(self.request)
+        context['comments'] = Comment.objects.filter(post=self.kwargs['pk'])
+        return context

@@ -58,6 +58,42 @@
                     <li class="list-group-item">내용: {{ post.contents }}</li>
                 </ul>
             </div>
+            <div class="mt-lg-5 mb-lg-3">
+                <h3>Comments</h3>
+            </div>
+            {% for comment in comments %}
+            <div class="card mb-3" style="width: 100%;">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{ comment.comment }}</li>
+                    <li class="list-group-item">등록날짜: {{ comment.register_date|date:'Y-m-d H:i' }}</li>
+                </ul>
+            </div>
+            {% endfor %}
+            <div>
+                <form method="POST" action="/comment/create/">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="form-group">
+                        {% if field.name != 'post' %}
+                        <label for="{{ field.id_for_label }}" class="mt-lg-5">
+                            <h4>{{ field.label }}</h4>
+                        </label>
+                        {% endif %}
+                        {% if field.name == 'comment' %}
+                        <textarea class="form-control" name="{{ field.name }}" id="{{ field.id_for_label }}"></textarea>
+                        {% else %}
+                        <input type="{{ field.field.widget.input_type }}" class="form-control mt-1"
+                            name="{{ field.name }}" id="{{ field.id_for_label }}" placeholder="{{ field.label }}"
+                            value="{% if field.name == 'post' %}{{ post.id }}{% endif %}" />
+                        {% endif %}
+                    </div>
+                    {% if field.errors %}
+                    <span style="color: red">{{ field.errors }}</span>
+                    {% endif %}
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary mt-3 mb-lg-5">작성하기</button>
+                </form>
+            </div>
         </div>
     </div>
     <div class="row">
