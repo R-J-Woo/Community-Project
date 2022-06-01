@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .forms import RegisterForm, LoginForm
 from django.views.generic.edit import FormView
+from django.views.generic import ListView
+from post.models import Post
 # Create your views here.
 
 
@@ -23,3 +25,15 @@ class Login(FormView):
         self.request.session['user'] = form.email
 
         return super().form_valid(form)
+
+
+class MyPage(ListView):  # 사용자가 지금까지 작성한 글을 보여주는 view
+    template_name = 'mypage.html'
+
+    # model을 지정하면 다른 사람들의 글도 볼 수 있기 때문에 문제가 될 수 있다.
+    # 그래서 queryset을 사용
+    # queryset을 만들 때 session에 접근이 필요하기 때문에 get_queryset을 사용한다
+    def get_queryset(self, **kwargs):
+        queryset = Post.objects.filter(
+            user__email=self.request.session.get('user'))
+        return queryset
