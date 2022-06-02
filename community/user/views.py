@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import RegisterForm, LoginForm
 from django.views.generic.edit import FormView
 from django.views.generic import ListView
 from post.models import Post
+from user.decorators import login_required
+from django.utils.decorators import method_decorator
 # Create your views here.
 
 
@@ -27,6 +29,14 @@ class Login(FormView):
         return super().form_valid(form)
 
 
+def logout(request):
+    if 'user' in request.session:
+        del(request.session['user'])
+
+    return redirect('/')
+
+
+@method_decorator(login_required, name='dispatch')
 class MyPage(ListView):  # 사용자가 지금까지 작성한 글을 보여주는 view
     template_name = 'mypage.html'
 

@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
 from .forms import RegisterForm
+from user.decorators import login_required
+from django.utils.decorators import method_decorator
 # Create your views here.
 
 
+@method_decorator(login_required, name='dispatch')
 class CommentCreate(FormView):  # 댓글 생성하는 view
     form_class = RegisterForm
     success_url = '/board/'

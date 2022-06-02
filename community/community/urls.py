@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from user.views import home, Register, Login, MyPage
+from user.views import home, Register, Login, MyPage, logout
 from post.views import PostList, PostRegister, PostDetail
 from comment.views import CommentCreate
 
@@ -24,6 +24,7 @@ urlpatterns = [
     path('', home),
     path('register/', Register.as_view()),
     path('login/', Login.as_view()),
+    path('logout/', logout),
     path('board/', PostList.as_view()),
     path('board/register/', PostRegister),
     path('board/<int:pk>/', PostDetail.as_view()),

@@ -1,11 +1,13 @@
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormView
+from user.decorators import login_required
 from .models import Post
 from .forms import RegisterForm
 from user.models import User
 from comment.models import Comment
 from comment.forms import RegisterForm as CommentForm
+from django.utils.decorators import method_decorator
 # Create your views here.
 
 
@@ -14,6 +16,7 @@ class PostList(ListView):  # post 목록을 보여주는 view
     template_name = 'board.html'
 
 
+@login_required
 def PostRegister(request):  # post를 작성하여 등록하는 view
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -37,6 +40,7 @@ def PostRegister(request):  # post를 작성하여 등록하는 view
     return render(request, 'post_register.html', {'form': form})
 
 
+@method_decorator(login_required, name='dispatch')
 class PostDetail(DetailView):  # 글 상세보기 view
     template_name = 'post_detail.html'
     queryset = Post.objects.all()
