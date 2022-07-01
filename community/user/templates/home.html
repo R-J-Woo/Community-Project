@@ -13,6 +13,9 @@
                 <li class="nav-item"><a class="nav-link" href="#!">게시판</a></li>
                 <li class="nav-item"><a class="nav-link" href="#!">내 정보</a></li>
             </ul>
+            {% if 'email' %}
+            환영합니다!
+            {% else %}
             <form class="d-flex">
                 <button class="btn" type="submit">
                     로그인
@@ -21,6 +24,7 @@
                     회원가입
                 </button>
             </form>
+            {% endif %}
         </div>
     </div>
 </nav>

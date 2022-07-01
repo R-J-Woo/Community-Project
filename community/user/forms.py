@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.forms import Form, PasswordInput
 from django import forms
 from django.contrib.auth.hashers import check_password, make_password
@@ -32,11 +33,14 @@ class RegisterForm(forms.Form):
                 self.add_error('password', '비밀번호가 서로 다릅니다')
                 self.add_error('re_password', '비밀번호가 서로 다릅니다')
             else:
-                user = User(
-                    email=email,
-                    password=make_password(password)
-                )
-                user.save()
+                try:  # email이 존재하고 있을 때 error처리
+                    user = User(
+                        email=email,
+                        password=make_password(password)
+                    )
+                    user.save()
+                except IntegrityError:
+                    self.add_error('email', '이메일이 이미 존재합니다.')
 
 
 class LoginForm(forms.Form):
