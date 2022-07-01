@@ -29,5 +29,5 @@ urlpatterns = [
     path('board/register/', PostRegister),
     path('board/<int:pk>/', PostDetail.as_view()),
     path('comment/create/', CommentCreate.as_view()),
-    path('mypage', MyPage.as_view())
+    path('mypage/', MyPage.as_view())
 ]

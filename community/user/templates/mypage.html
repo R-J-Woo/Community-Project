@@ -10,9 +10,9 @@
                 class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">게시판</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">내 정보</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/board/">게시판</a></li>
+                <li class="nav-item"><a class="nav-link" href="/mypage/">내 정보</a></li>
             </ul>
             {% if 'email' %}
             환영합니다!
@@ -42,6 +42,7 @@
 <div class="container mb-lg-5">
     <div class="row mt-5">
         <div class="col-12">
+            {% if object_list %}
             <table class="table table-light">
                 <thead class="thead-light">
                     <tr>
@@ -62,6 +63,9 @@
                     {% endfor %}
                 </tbody>
             </table>
+            {% else %}
+            <h2 class="fw-bolder text-center">작성자가 작성하신 글이 없습니다!</h2>
+            {% endif %}
         </div>
     </div>
 </div>
