@@ -13,8 +13,8 @@
                 <li class="nav-item"><a class="nav-link" href="/board/">게시판</a></li>
                 <li class="nav-item"><a class="nav-link" href="/mypage/">내 정보</a></li>
             </ul>
-            {% if 'email' %}
-            환영합니다!
+            {% if request.session.user %}
+            환영합니다, {{ request.session.user }} 님!
             {% else %}
             <form class="d-flex">
                 <button class="btn" type="submit">
