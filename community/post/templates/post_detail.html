@@ -68,6 +68,7 @@
             {% for comment in comments %}
             <div class="card mb-3" style="width: 100%;">
                 <ul class="list-group list-group-flush">
+                    <li class="list-group-item">작성자: {{ comment.user }}</li>
                     <li class="list-group-item">{{ comment.comment }}</li>
                     <li class="list-group-item">등록날짜: {{ comment.register_date|date:'Y-m-d H:i' }}</li>
                 </ul>
