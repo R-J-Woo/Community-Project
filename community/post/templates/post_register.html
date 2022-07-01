@@ -15,14 +15,17 @@
                 <li class="nav-item"><a class="nav-link" href="/mypage/">내 정보</a></li>
             </ul>
             {% if request.session.user %}
-            환영합니다, {{ request.session.user }} 님!
+            <div class="mx-lg-4">환영합니다, {{ request.session.user }} 님!</div>
+            <button class="btn border-dark" type="submit">
+                <a href="/logout/" class="text-decoration-none text-dark">로그아웃</a>
+            </button>
             {% else %}
             <form class="d-flex">
                 <button class="btn" type="submit">
-                    로그인
+                    <a href="/login/" class="text-decoration-none text-dark">로그인</a>
                 </button>
                 <button class="btn" type="submit">
-                    회원가입
+                    <a href="/register/" class="text-decoration-none text-dark">회원가입</a>
                 </button>
             </form>
             {% endif %}
