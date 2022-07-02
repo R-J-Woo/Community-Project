@@ -14,6 +14,9 @@ from django.contrib import messages
 
 class PostList(ListView):  # post 목록을 보여주는 view
     model = Post
+    paginate_by = 15
+    page_kwargs = 'page'  # 역순으로 정렬
+    ordering = '-register_date'
     template_name = 'board.html'
 
 
