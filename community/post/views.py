@@ -57,6 +57,9 @@ class PostDetail(DetailView):  # 글 상세보기 view
 @login_required
 def PostUpdate(request, pk):
     post = Post.objects.get(id=pk)
+    if post.user != request.user:  # 글 작성자가 아니면 글을 수정할 수 없도록 함
+        return redirect('/board/')
+
     if request.method == 'POST':
         form = RegisterForm(request.POST, instance=post)
         if form.is_valid():
@@ -66,3 +69,10 @@ def PostUpdate(request, pk):
     else:
         form = RegisterForm(instance=post)
     return render(request, 'post_update.html', {'form': form})
+
+
+@login_required
+def PostDelete(request, pk):
+    post = Post.objects.get(id=pk)
+    post.delete()
+    return redirect('/board/')

@@ -66,8 +66,11 @@
                 </ul>
             </div>
             {% if post.user.email == request.session.user %}
-            <button type="submit" class="btn btn-primary mt-3 mb-lg-5">
+            <button type="submit" class="btn btn-secondary mt-3 mb-lg-5">
                 <a href="/board/{{ post.id }}/update/" class="text-decoration-none text-light">수정하기</a>
+            </button>
+            <button type="submit" class="btn btn-secondary mt-3 mb-lg-5">
+                <a href="/board/{{ post.id }}/delete/" class="text-decoration-none text-light">삭제하기</a>
             </button>
             {% endif %}
             <div class="mt-lg-5 mb-lg-3">
@@ -104,7 +107,7 @@
                     <span style="color: red">{{ field.errors }}</span>
                     {% endif %}
                     {% endfor %}
-                    <button type="submit" class="btn btn-primary mt-3 mb-lg-5">작성하기</button>
+                    <button type="submit" class="btn btn-secondary mt-3 mb-lg-5">작성하기</button>
                 </form>
             </div>
         </div>
