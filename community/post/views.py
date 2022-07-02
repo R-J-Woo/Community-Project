@@ -8,6 +8,7 @@ from user.models import User
 from comment.models import Comment
 from comment.forms import RegisterForm as CommentForm
 from django.utils.decorators import method_decorator
+from django.contrib import messages
 # Create your views here.
 
 
@@ -51,3 +52,17 @@ class PostDetail(DetailView):  # 글 상세보기 view
         context['form'] = CommentForm(self.request)
         context['comments'] = Comment.objects.filter(post=self.kwargs['pk'])
         return context
+
+
+@login_required
+def PostUpdate(request, pk):
+    post = Post.objects.get(id=pk)
+    if request.method == 'POST':
+        form = RegisterForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.save()
+            return redirect('/board/')
+    else:
+        form = RegisterForm(instance=post)
+    return render(request, 'post_update.html', {'form': form})

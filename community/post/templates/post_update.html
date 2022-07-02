@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load humanize %}
 {% block contents %}
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -35,28 +36,51 @@
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Django Project에 오신 것을 환영합니다</h1>
-            <p class="lead fw-normal text-white-50 mb-0">이 프로젝트는 python/django로 제작한 온라인 커뮤니티입니다</p>
+            <h1 class="display-4 fw-bolder">게시판</h1>
+            <p class="lead fw-normal text-white-50 mb-0">원하는 글을 작성해 보세요</p>
         </div>
     </div>
 </header>
-
-<div class="container px-lg-5 my-5">
-    <div class="text-center">
-        <h4 class="fw-bolder">이 페이지는 django를 이용해서 기본 기능인 CRUD를 가지고 있는 게시판을 제작한 것입니다.</h4>
-        <p class="lead fw-normal mb-0">제가 제작한 기능들로는 로그인, 로그아웃, 회원가입, 게시판 목록, 게시판 글 작성, 게시판 상세보기, 상세보기에서 댓글 작성, 글 수정, 마이
-            페이지 등이 있습니다.</p>
+<!-- Section-->
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <h1>게시글 수정하기</h1>
+        </div>
     </div>
-</div>
+    <div class="row mt-5">
+        <div class="col-12">
+            {{ error }}
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-12">
+            <form method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {% if field.name == 'contents' %}
+                    <textarea class="form-control" name="{{ field.name }}" id="{{ field.id_for_label }}"></textarea>
+                    {% else %}
+                    <input type="{{ field.field.widget.input_type }}" class="form-control" id="{{ field.id_for_label }}"
+                        name="{{ field.name }}" />
+                    {% endif %}
+                </div>
+                {% if field.errors %}
+                <span style="color: red">{{ field.errors }}</span>
+                {% endif %}
+                {% endfor %}
+                <button type="submit" class="btn btn-primary mt-4 mb-lg-5">수정</button>
+            </form>
+        </div>
+    </div>
 
+</div>
 <!-- Footer-->
 <footer class="py-5 bg-dark">
     <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p>
     </div>
 </footer>
-<!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Core theme JS-->
-<script src="js/scripts.js"></script>
 {% endblock %}
